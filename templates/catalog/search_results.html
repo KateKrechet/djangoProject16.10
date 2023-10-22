@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block head %}
+    <title>Все фильмы</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/podpiska.css' %}">
+{% endblock head %}
+{% block content %}
+    {% if not film in film_list %}
+        <h2>По вашему запросу ничего не найдено</h2>
+    {% endif %}
+    <ul>
+        {% for film in film_list %}
+            <li>
+
+                <div class="card">
+                    <img src="{% static film.image %}" alt="">
+                    <p><a href="{{ film.get_absolute_url }}">{{ film.title }}</a> {{ film.genre }}</p>
+                    {% if user.username %}
+                        <a href="{% url 'prosmotr' film.id film.status.id user.id %}">
+                            <button>Смотреть</button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'prosmotr' film.id film.status.id 0 %}">
+                            <button>Смотреть</button>
+                        </a>
+                    {% endif %}
+
+
+                </div>
+
+            </li>
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}
