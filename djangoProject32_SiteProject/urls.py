@@ -21,6 +21,7 @@ from catalog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
+    path('search/',views.SearchResultsView.as_view(), name='search_results'),
     # ссылка Фильмы
     path('kino/', views.KinoList.as_view(), name='allkino'),
     # path('kino/<int:id>/<str:title>', views.info, name='info'),

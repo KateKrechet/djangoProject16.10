@@ -10,10 +10,12 @@ class Signupform(UserCreationForm):
     password2 = forms.CharField(label='подтверждение', help_text='',
                                 widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
 
-    email = forms.EmailField(label='почта',widget=forms.TextInput(attrs={'placeholder': 'qwe@mail.ru'}))
-    first_name = forms.CharField(label='имя',max_length=20)
-    last_name = forms.CharField(label='фамилия',max_length=20,required=False)
+    email = forms.EmailField(label='почта', widget=forms.TextInput(attrs={'placeholder': 'qwe@mail.ru'}))
+    first_name = forms.CharField(label='имя', max_length=20)
+    last_name = forms.CharField(label='фамилия', max_length=20, required=False)
 
     # class Meta():
     #     model = User
     #     fields = {'email', 'first_name', 'last_name'}
+
+

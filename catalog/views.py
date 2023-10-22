@@ -4,7 +4,8 @@ from django.views import generic
 from django.http import HttpResponse
 # импорт пользователей и групп, где они могут находиться
 from django.contrib.auth.models import User, Group
-from .form import Signupform
+from .form import *
+from django.db.models import Q
 
 
 # Create your views here.
@@ -20,12 +21,24 @@ def index(req):
         username = 'Гость'
         print(req.user.id)
     print(req.user.username)
+
     data = {'k1': numkino, 'k2': numact, 'k3': numfree, 'username': username}
     # user = User.objects.create_user('user2', 'user2@mail.ru', 'useruser')
     # user.first_name = 'Vlad'
     # user.last_name = 'Petrov'
     # user.save()
     return render(req, 'index.html', context=data)
+
+
+class SearchResultsView(generic.ListView):
+    model = Film
+    template_name = 'catalog/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q').title()
+        object_list = Film.objects.filter(Q(title__icontains=query))
+        return object_list
+
 
 
 # def allkino(req):
@@ -147,6 +160,7 @@ def new_status(req):
     print(k5, type(k5))
     data = {'tek_status': k1, 'p1': k2, 'p2': k3, 'p3': k4, 'p4': k5}
     return render(req, 'new_status.html', data)
+
 
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
